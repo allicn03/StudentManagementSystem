@@ -12,10 +12,12 @@ package org.perscholas.dao;
         import org.springframework.data.jpa.repository.JpaRepository;
         import org.springframework.stereotype.Repository;
 
+        import java.util.List;
         import java.util.Optional;
 
 @Repository //makes this a repository
 public interface ICourseRepo extends JpaRepository<Course, Long> {
 
-    Optional<Course> findCourseByCourseId(final long courseId);
+    Optional<Course> findBycName(final String cName);
+
 }

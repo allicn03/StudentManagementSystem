@@ -47,7 +47,9 @@ public class CourseController {
     }
 
     @GetMapping("/registercourse")
-    public String register(){
+    public String register(Model model){
+        List<Course> c = courseService.getCourses();
+        model.addAttribute("courseTemp", c);
         return "registertocourse";
     }
 

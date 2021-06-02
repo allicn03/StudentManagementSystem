@@ -34,15 +34,16 @@ public class CourseService {
     //********************* NEEDS WORKS TO GET STUDENT ID AND PUT THE STUDENT ID AND COURSE ID INTO sCourses TABLE **********************
 
     //saves the course to the database
-//    public Course addNewCourse(Course course) {
-//
-//        Optional<Course> c = courseRepo.findCourseByCourseId(course.getCourseId());
-//
-//        if (c.isPresent()) {
-//            throw new IllegalStateException("Course Name Taken"); // throws error is email is already taken
-//        }
-//        courseRepo.save(course); //saves the student to the database
-//        return course;
-//
-//        }
+    public Course addNewCourse(Course course) {
+
+        Optional<Course> c = courseRepo.findBycName(course.getCName());
+
+        if (c.isPresent()) {
+            throw new IllegalStateException("Course Name Taken"); // throws error is email is already taken
+        }
+        courseRepo.save(course); //saves the student to the database
+        return course;
+
+        }
+
 }

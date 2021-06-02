@@ -51,28 +51,21 @@
             <!-- Login Form -->
     <form th:action="@{./submit}" method="post" th:object="${course}">
         <div class="mx-auto mt-3 form-width bg-dark center h5 pb-2">
-            <label class="center text-white">Register Student</label>
+            <label class="center text-white">Register to course</label>
         </div>
         <div class="mx-auto form-width">
             <label for="name" class="form-label">Course Name:</label>
             <!--    names for inputs must be the same as in the model class-->
         </div>
         <div class="mx-auto form-width">
-            <select class="form-control selectpicker" th:field="*{cName}" id="pizza">
+            <select class="form-control selectpicker" th:field="*{cName}" id="name">
                 <option value="">Nothing selected</option>
-                <option th:each="courses : ${course}"
-                        th:value="${courses.cName}"
-                        th:text="${pizza}">pizza
+                <option th:each="course : ${courseTemp}"
+                        th:value="${course.cName}"
+                        th:text="${course.cName}">
                 </option>
 
             </select>
-        </div>
-        <div class="mx-auto form-width">
-            <label for="instructor" class="form-label">Instructor Name:</label>
-        </div>
-        <div class="mx-auto form-width">
-            <input type="text" id="instructor" class="form-control" th:field="*{cInstructorName}">
-            <p class="error" th:each="error : ${#fields.errors('cInstructorName')}" th:text="${error}"></p>
         </div>
         <div class="mx-auto mt-3 form-width">
             <button type="submit" class="btn btn-primary">Submit</button>
