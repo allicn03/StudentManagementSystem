@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface IAuthGroupRepo {
+public interface IAuthGroupRepo extends JpaRepository<AuthGroup, Long>{
 
+    List<AuthGroup> findByaUsername(String username);
 }
