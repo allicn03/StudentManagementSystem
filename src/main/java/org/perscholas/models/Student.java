@@ -38,15 +38,15 @@ public class Student implements Serializable {
     @Column(columnDefinition = "INT(11) UNSIGNED", name = "studentid", nullable = false)
     Long studentId;
 
-    @Email(regexp = "^\\b[\\w.-]+@[\\w.-]+\\.\\w{2,4}\\b", message = "Invalid email address")
-    @Column(columnDefinition = "VARCHAR(50)", name = "email", nullable = false)
+//    @Email(regexp = "^\\b[\\w.-]+@[\\w.-]+\\.\\w{2,4}\\b", message = "Invalid email address")
+    @Column(columnDefinition = "VARCHAR(255)", name = "email", nullable = false)
     String sEmail;
 
-    @Column(columnDefinition = "VARCHAR(50)", name = "name", nullable = false)
+    @Column(columnDefinition = "VARCHAR(255)", name = "name", nullable = false)
     @NotBlank(message = "Cannot be empty")
     String sName;
 
-    @Column(columnDefinition = "VARCHAR(50)", name = "password", nullable = false)
+    @Column(columnDefinition = "VARCHAR(255)", name = "password", nullable = false)
     @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$", message = "Must contain at least 8 characters\n" +
             "At least 1 upper case letter\n" +
             "At least 1 lower case letter\n" +
@@ -62,4 +62,5 @@ public class Student implements Serializable {
             indexes = {@Index(columnList = "studentId,courseId")} //sets indexes as student id and course id
     )
     List<Course> sCourses;
+
 }

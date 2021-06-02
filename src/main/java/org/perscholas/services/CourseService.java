@@ -1,15 +1,18 @@
 package org.perscholas.services;
 
 
+import lombok.extern.java.Log;
 import org.perscholas.dao.ICourseRepo;
 import org.perscholas.models.Course;
 import org.perscholas.models.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Log
 @Service
 public class CourseService {
 
@@ -45,5 +48,14 @@ public class CourseService {
         return course;
 
         }
+
+    @Transactional
+    public void removeCourse(Long id){
+        boolean exists = courseRepo.existsById(id);
+        if(exists){
+            log.info("course with id " + id + " has been removed");
+            courseRepo.deleteById(id);
+        }
+    }
 
 }

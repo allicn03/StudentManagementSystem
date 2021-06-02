@@ -1,6 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org http://www.thymeleaf.org
+  http://www.ultraq.net.nz/thymeleaf/layout http://www.ultraq.net.nz/thymeleaf/layout
+  http://www.thymeleaf.org/thymeleaf-extras-springsecurity4 http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <title>New Student</title>
@@ -15,20 +21,35 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <div sec:authorize="isAuthenticated()">
+                        <a class="nav-link active" aria-current="page" th:href="@{/}">Welcome <span sec:authentication="name"></span></a>
+                    </div>
+                </li>
                 <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/student/register}">Register Student</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/course/registercourse}">Register to a Course</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/login}">login</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/logout}">logout</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" th:href="@{/student/showstudents}">Show All Students</a></li>
-                        <li><a class="dropdown-item" th:href="@{/course/showcourses}">Show All Courses</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" th:href="@{#}">Get Student By Email</a></li>
-                        <li><a class="dropdown-item" th:href="@{#}">Get Student Courses</a></li>
-                    </ul>
+                <div sec:authorize="isAuthenticated()">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/student/register}">Register Student</a></li>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/course/registercourse}">Register to a Course</a></li>
+                </div>
+                <div  sec:authorize="isAnonymous()">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
+                </div>
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" th:href="@{/console/showstudents}">Show All Students</a></li>
+                            <li><a class="dropdown-item" th:href="@{/console/showcourses}">Show All Courses</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" th:href="@{#}">Get Student By Email</a></li>
+                            <li><a class="dropdown-item" th:href="@{#}">Get Student Courses</a></li>
+                        </ul>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
+                </div>
                 </li>
             </ul>
         </div>
@@ -42,6 +63,8 @@
         <tr>
             <th scope="col">Course Name</th>
             <th scope="col">Instructor</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
 
         </tr>
         </thead>
@@ -50,6 +73,8 @@
 
             <td th:text="${course.cName}"></td>
             <td th:text="${course.cInstructorName}"></td>
+            <td><form th:action="@{'console/editcourse/' + ${course.courseId}}" method="post"><button type="submit" class="btn btn-primary">Edit</button></form></td>
+            <td><form th:action="@{'console/deletecourse/' + ${course.courseId}}" method="post"><button type="submit" class="btn btn-danger">Remove</button></form></td>
 
 
         </tr>

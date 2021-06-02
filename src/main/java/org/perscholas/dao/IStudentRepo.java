@@ -16,5 +16,5 @@ import java.util.Optional;
 @Repository //makes this a repository
 public interface IStudentRepo extends JpaRepository<Student, Long> {
     Optional<Student> findStudentBysEmail(final String sEmail);
-    Optional<Student> findBysName(final String sName);
+    Optional<Student> findBysName(String sName);
 }
